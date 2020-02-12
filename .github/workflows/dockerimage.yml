@@ -11,12 +11,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Log in to registry
-      uses: actions/docker/login@master
       env:
-          DOCKER_REGISTRY_URL: docker.pkg.github.com
           DOCKER_USERNAME: ${{ github.actor }}
           DOCKER_PASSWORD: ${{ secrets.dockerHubJbuet }}
-    
+      run: docker login
+      
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag ${{ github.actor }}/kube-dewatcher:latest
       
