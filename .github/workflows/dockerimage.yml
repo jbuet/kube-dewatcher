@@ -17,4 +17,4 @@ jobs:
       run: docker build . --file Dockerfile --tag ${{ github.actor }}/kube-dewatcher:latest
       
     - name: Push the Docker image
-      run: docker push --tag ${{ github.actor }}/kube-dewatcher:latest
+      run: docker push  ${{ github.actor }}/kube-dewatcher:latest
