@@ -60,4 +60,11 @@ spec:
       - image: jbuet/kube-dewatcher
         imagePullPolicy: Always
         name: app
+        env:
+          - name: CLUSTER_NAME
+            value: "cluster.test" # change me!
+          - name: SLACK_API_TOKEN
+            value: "xxx" # change me!
+          - name: SLACK_CHANNEL
+            value: "default" # change me!
 ---
