@@ -1,4 +1,3 @@
 kubernetes
-pprint
-argparse
+#argparse
 slackclient

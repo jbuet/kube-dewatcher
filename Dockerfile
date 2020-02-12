@@ -1,6 +1,6 @@
-FROM python:3.7.2-alpine
+FROM python:3.7.6-stretch
 
-RUN pip install --upgrade pip && adduser -D worker
+RUN pip install --upgrade pip && adduser  worker
 
 USER worker
 
@@ -10,7 +10,7 @@ ENV PATH="/home/worker/.local/bin:${PATH}"
 
 COPY --chown=worker:worker requirements.txt requirements.txt
 
-RUN pip install --user -r requirements.txt
+RUN pip install --upgrade pip --user && pip install --user -r requirements.txt
 
 COPY --chown=worker:worker . /app
 
