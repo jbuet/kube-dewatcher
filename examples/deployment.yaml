@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: k8s-dewatcher
+  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: k8s-dewatcher-crb
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: k8s-dewatcher-cr
+subjects:
+  - kind: ServiceAccount
+    name: k8s-dewatcher
+    namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: k8s-dewatcher-cr
+rules:
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - get
+  - list
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: k8s-dewatcher
+  name: k8s-dewatcher
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8s-dewatcher
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: k8s-dewatcher
+    spec:
+      serviceAccount: k8s-dewatcher
+      containers:
+      - image: jbuet/k8s-dewatcher
+        imagePullPolicy: Always
+        name: app
+---
